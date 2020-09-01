@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+}
+
+p {
+    font-size: 50px;
+}
+
+.container {
+  background: #e1e1e1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  height: 86vh;
+  padding: 50px;
+}
+
+#game-controls {
+  width: 500px;
+  background: #f0f0f3;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+  margin: 0 auto;
+  height: 70%;
+}
+
+#game-board {
+  width: 500px;
+  background: #f0f0f3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 50px;
+  margin: 0 auto;
+  height: 70%;
+}
+
+.square {
+  display: inline-block;
+  width: 120px;
+  height: 113px;
+  background: #f0f0f3;
+  box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(174, 174, 192, 0.4);
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 113px;
+  letter-spacing: 0.02em;
+  color: #404040;
+  text-transform: uppercase;
+}
+
+.x {
+  color: #f25f5f;
+}
+
+.o {
+  color: #5fcff2;
+}
+
+input[type="text"] {
+  height: 20px;
+  background: #f5f5fa;
+
+  box-shadow: inset -1px -1px 2px rgba(255, 255, 255, 0.5),
+    inset 1px 1px 1px rgba(170, 170, 204, 0.25),
+    inset 3px 3px 3px rgba(170, 170, 204, 0.5), inset -3px -3px 3px #ffffff;
+  border-radius: 15px;
+  border: none;
+  display: block;
+  text-align: center;
+  width: 50%;
+  padding: 20px;
+  margin: 10px auto 30px;
+
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: 50%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px auto;
+  border: none;
+  cursor: pointer;
+  box-shadow: -3px -3px 7px rgba(255, 255, 255, 0.5),
+    3px 3px 7px rgba(170, 170, 204, 0.25), 3px 3px 7px rgba(170, 170, 204, 0.5),
+    -7px -7px 15px #ffffff;
+  border-radius: 15px;
+}
+
+input[type="submit"]:active { 
+    transform: scale(0.98); 
+    /* Scaling button to 0.98 to its original size */ 
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
+    /* Lowering the shadow */ 
+} 
