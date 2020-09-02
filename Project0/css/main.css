@@ -62,6 +62,24 @@ p {
   color: #404040;
   text-transform: uppercase;
 }
+.square:hover {
+  width: 120px;
+  height: 113px;
+  background: #f0f0f3;
+  box-shadow: 0px 0px 20px #4caf50;
+}
+.square:active {
+  width: 120px;
+  height: 113px;
+  background: #dedede;
+  box-shadow: 0px 0px 20px #4caf50;
+}
+.clicked {
+  width: 120px;
+  height: 113px;
+  background: #dedede;
+  box-shadow: 0px 0px 20px #4caf50;
+}
 
 .x {
   color: #f25f5f;
@@ -105,7 +123,46 @@ input[type="submit"] {
 
 input[type="submit"]:active { 
     transform: scale(0.98); 
-    /* Scaling button to 0.98 to its original size */ 
+
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
-    /* Lowering the shadow */ 
+
 } 
+
+button {
+  width: 50%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 10px auto;
+  border: none;
+  cursor: pointer;
+  box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(174, 174, 192, 0.4);
+  border-radius: 15px;
+  display: inherit;
+}
+
+button:active { 
+    transform: scale(0.98); 
+
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
+
+} 
+
+button:hover { 
+  transform: scale(0.98); 
+
+  box-shadow: 3px 2px 22px 1px #3aeb34; 
+
+} 
+
+.btns {
+  display: block;
+}
+
+.trivia {
+  font-size: 25px;;
+}
+
+.win {
+  box-shadow: 0px 0px 20px #4caf50
+}
