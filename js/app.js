@@ -75,15 +75,15 @@ const showTurn = function () {
   if (round % 2 == 0 && game.win == null) {
     clearControls();
     controls.append(`
-      <p class="x">X</p>
       <p>${game.x}'s turn</p>
+      <p class="x">X</p>
       <p class="small">Select a Category</p>
       `);
   } else if (round % 2 !== 0 && game.win == null) {
     clearControls();
     controls.append(`
+      <p>${game.o}'s turn</p>
       <p class="o">O</p>
-      //<p>${game.o}'s turn</p>
       <p class="small">Select a Category</p>
       `);
   }
