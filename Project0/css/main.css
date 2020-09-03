@@ -5,43 +5,52 @@ body {
   font-style: normal;
   font-weight: 400;
   text-align: center;
+  background: linear-gradient( #353A40, #16171B);
 }
 
 p {
     font-size: 50px;
 }
 
+.logo {
+  width: 100px;
+  margin: 0px auto 40px;
+}
+
 .container {
-  background: #e1e1e1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0;
-  height: 86vh;
-  padding: 50px;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+  width: 80%;
 }
 
 #game-controls {
-  width: 500px;
+  width: 420px;
   background: #f0f0f3;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: column;
   justify-content: center;
-  padding: 50px;
+  padding: 40px;
   margin: 0 auto;
-  height: 70%;
+  height: 400px;
+  border-radius: 30px;
 }
 
 #game-board {
-  width: 500px;
+  width: 420px;
   background: #f0f0f3;
+
+  border-radius: 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 50px;
+  padding: 40px;
   margin: 0 auto;
-  height: 70%;
+  height: 400px;
 }
 
 .square {
@@ -56,7 +65,7 @@ p {
   font-family: Rubik;
   font-style: normal;
   font-weight: 500;
-  font-size: 50px;
+  font-size: 20px;
   line-height: 113px;
   letter-spacing: 0.02em;
   color: #404040;
@@ -65,28 +74,42 @@ p {
 .square:hover {
   width: 120px;
   height: 113px;
-  background: #f0f0f3;
-  box-shadow: 0px 0px 20px #4caf50;
+  background: #dedede;
+  /* box-shadow:
+  /* 0px 0px 20px #08feeb, */
+  /* inset -3px -5px 10px #FAFBFF,
+  inset 5px 5px 10px #A6ABBD;
+  box-shadow: ; */ */
 }
 .square:active {
   width: 120px;
   height: 113px;
   background: #dedede;
-  box-shadow: 0px 0px 20px #4caf50;
+  box-shadow:
+  /* 0px 0px 20px #08feeb, */
+  inset -3px -5px 10px #FAFBFF,
+  inset 5px 5px 10px #A6ABBD;
+  /* box-shadow: 0px 0px 20px #08feeb; */
 }
 .clicked {
   width: 120px;
   height: 113px;
   background: #dedede;
-  box-shadow: 0px 0px 20px #4caf50;
+  box-shadow:
+  /* 0px 0px 20px #08feeb, */
+  inset -3px -5px 10px #FAFBFF,
+  inset 5px 5px 10px #A6ABBD;
+  box-shadow: ;
 }
 
 .x {
-  color: #f25f5f;
+  color: #fe0896;
+  font-size: 65px;
 }
 
 .o {
-  color: #5fcff2;
+  color: #7008fe;
+  font-size: 65px;
 }
 
 input[type="text"] {
@@ -130,28 +153,27 @@ input[type="submit"]:active {
 
 button {
   width: 50%;
-  background-color: #4caf50;
+  background: linear-gradient(180deg, #016BB8 10%, #0188eb);
   color: white;
   padding: 14px 20px;
   margin: 10px auto;
   border: none;
   cursor: pointer;
-  box-shadow: -3px -3px 5px #ffffff, 3px 3px 5px rgba(174, 174, 192, 0.4);
-  border-radius: 15px;
+  border-radius: 12px;
   display: inherit;
 }
 
 button:active { 
-    transform: scale(0.98); 
+    transform: scale(1.1); 
 
-    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
+    box-shadow: 3px 2px 22px 1px #0896fe; 
 
 } 
 
 button:hover { 
   transform: scale(0.98); 
 
-  box-shadow: 3px 2px 22px 1px #3aeb34; 
+  box-shadow: 2px 2px 10px #08feeb; 
 
 } 
 
