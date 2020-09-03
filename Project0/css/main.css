@@ -10,6 +10,7 @@ body {
 
 p {
     font-size: 50px;
+    margin: 0;
 }
 
 .logo {
@@ -75,6 +76,7 @@ p {
   width: 120px;
   height: 113px;
   background: #dedede;
+  cursor: pointer;
   /* box-shadow:
   /* 0px 0px 20px #08feeb, */
   /* inset -3px -5px 10px #FAFBFF,
@@ -182,9 +184,19 @@ button:hover {
 }
 
 .trivia {
-  font-size: 25px;;
+  font-size: 25px;
+  margin: 0 0 15px;
 }
 
 .win {
   box-shadow: 0px 0px 20px #4caf50
+}
+
+#timer {
+  font-size: 20px;
+}
+
+.small {
+  font-size: 20px;
+  margin: 20px 0;
 }

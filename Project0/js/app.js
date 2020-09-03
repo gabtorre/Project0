@@ -9,6 +9,9 @@ let round = 0;
 let controls = $("#game-controls");
 // Gets player names from DOM
 $("#submit-names").on("click", function () {
+
+clickSound();
+
 const player1 = document.getElementById("player1").value;
 //console.log(player1);
 const player2 = document.getElementById("player2").value;
@@ -41,7 +44,11 @@ const showFirst = function () {
 //shows who goes first
 clearControls();
 if (round == 0) {
-controls.append(`<p>${game.x} goes first (X)</p>`)
+controls.append(`
+<p class="x">X</p>
+<p>${game.x} goes first</p>
+<p class="small">Select a Category</p>
+`)
 } 
 }
 
@@ -68,13 +75,18 @@ for (let index = 1; index < 10; index++) {
 const showTurn = function () {
 if ( round % 2 == 0 && game.win == null ) {
   clearControls();
-  controls.append(`<p>${game.x}'s turn (X)</p>`)
+  controls.append(`
+  <p class="x">X</p>
+  <p>${game.x}'s turn</p>
+  `)
 } else if (  round % 2 !== 0 && game.win == null ) {
   clearControls();
-  controls.append(`<p>${game.o}'s turn (O)</p>`)
+  controls.append(`
+  <p class="o">O</p>
+  <p>${game.o}'s turn</p>
+  `)
 }
 }
-
 
 //adds click listeners to buttons
 const addListeners = function () {
@@ -84,54 +96,43 @@ for (let index = 1; index < 10; index++) {
 }
 };
 
-
-
+// Adds class to mark which square triggered the trivia 
 function handler( event ) {
 $( event.target ).addClass("clicked")
-//$(event.target).text("?")
-
-console.log(event.target)
-
 }
 
+//Shuffle function to shuffle annswers https://css-tricks.com/snippets/jquery/shuffle-children/
+$.fn.shuffleChildren = function () {
+  $.each(this.get(), function (index, el) {
+    var $el = $(el);
+    var $find = $el.children();
 
-//Shuffle function https://css-tricks.com/snippets/jquery/shuffle-children/
-$.fn.shuffleChildren = function() {
-$.each(this.get(), function(index, el) {
-  var $el = $(el);
-  var $find = $el.children();
+    $find.sort(function () {
+      return 0.5 - Math.random();
+    });
 
-  $find.sort(function() {
-    return 0.5 - Math.random();
+    $el.empty();
+    $find.appendTo($el);
   });
-
-  $el.empty();
-  $find.appendTo($el);
-});
 };
 
-// $("#shuffle").click(function() {
-//   // Usage
-
-// });
-
-const getTrivia = function () { $.getJSON("https://opentdb.com/api.php?amount=1&category=11&difficulty=easy&type=multiple", function(json) {
+//Gets questions to display
+const getTrivia = function () { $.getJSON("https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple", function(json) {
          console.log(json)
 
-         
+        clickSound();
 
          clearControls();
+         controls.append(`<p id="timer"></p>`)
          controls.append(`<p class="trivia">${json.results[0].question}</p>`)
 
          controls.append(`
-         
          <div class="btns">
          <button id="right" class="right">${json.results[0].correct_answer}</button>
          <button class="wrong">${json.results[0].incorrect_answers[0]}</button>
          <button class="wrong">${json.results[0].incorrect_answers[1]}</button>
          <button class="wrong">${json.results[0].incorrect_answers[2]}</button>
          </div>
-         
          `)
 
         $(".btns").shuffleChildren();
@@ -148,6 +149,7 @@ const getTrivia = function () { $.getJSON("https://opentdb.com/api.php?amount=1&
 const rightAnswer = function(){
 
 $("#right").on("click", function () {
+  clearTimeout(timer);
 let clicked = $(".clicked");
 if (round % 2 == 0) {
   clicked.addClass("x").text("x");
@@ -156,6 +158,8 @@ if (round % 2 == 0) {
   $(".clicked").addClass("o").text("o");
   clicked.removeClass("clicked");
 }
+
+correctSound();
 
 addListeners();
 
@@ -175,9 +179,12 @@ controls.prepend("<p>Correct</p>")
 const wrongAnswer = function(){
 
 $(".wrong").on("click", function () {
+  clearTimeout(timer);
   let clicked = $(".clicked");
 
   clicked.removeClass("clicked");
+
+  wrongSound();
 
   addListeners();
 
@@ -194,60 +201,114 @@ $(".wrong").on("click", function () {
 });
 }
 
+// Sound functions
+//Win sound
+const win = function () {
+  const obj = document.createElement("audio");
+  obj.src = "./sounds/win.wav";
+  obj.play();
+};
+//Click Sound
+const clickSound = function () {
+  const obj = document.createElement("audio");
+  obj.src = `./sounds/click.wav`;
+  obj.play();
+};
+// Correct Sound
+const correctSound = function () {
+const obj = document.createElement("audio");
+obj.src = "./sounds/correct.wav"; 
+obj.play(); 
+};
+//Wrong Sound
+const wrongSound = function () {
+const obj = document.createElement("audio");
+obj.src = "./sounds/wrong.wav"; 
+obj.play(); 
+}
+
+
 //Checks possible winning combos
 const checkWin = function (mark, player) {
 
   if ( $("#1").hasClass(mark) && $("#2").hasClass(mark) && $("#3").hasClass(mark) ) {    game.win = true;
+    win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#1, #2, #3").addClass("win")
   } 
   
-  else if ( $("#4").hasClass(mark) && $("#5").hasClass(mark) && $("#6").hasClass(mark) ) {game.win = true;
+  else if ( $("#4").hasClass(mark) && $("#5").hasClass(mark) && $("#6").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#4, #5, #6").addClass("win")
   } 
   
-  else if ( $("#7").hasClass(mark) && $("#8").hasClass(mark) && $("#9").hasClass(mark) ) {game.win = true;
+  else if ( $("#7").hasClass(mark) && $("#8").hasClass(mark) && $("#9").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#7, #8, #9").addClass("win")
   } 
   
-  else if ( $("#1").hasClass(mark) && $("#4").hasClass(mark) && $("#7").hasClass(mark) ) {game.win = true;
+  else if ( $("#1").hasClass(mark) && $("#4").hasClass(mark) && $("#7").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#1, #4, #7").addClass("win")
   } 
   
-  else if ( $("#2").hasClass(mark) && $("#5").hasClass(mark) && $("#8").hasClass(mark) ) {game.win = true;
+  else if ( $("#2").hasClass(mark) && $("#5").hasClass(mark) && $("#8").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#2, #5, #8").addClass("win")
   } 
   
-  else if ( $("#3").hasClass(mark) && $("#6").hasClass(mark) && $("#9").hasClass(mark) ) {game.win = true;
+  else if ( $("#3").hasClass(mark) && $("#6").hasClass(mark) && $("#9").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#3, #6, #9").addClass("win")
   } 
   
-  else if ( $("#1").hasClass(mark) && $("#5").hasClass(mark) && $("#9").hasClass(mark) ) {game.win = true;
+  else if ( $("#1").hasClass(mark) && $("#5").hasClass(mark) && $("#9").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#1, #5, #9").addClass("win")
   } 
   
-  else if ( $("#3").hasClass(mark) && $("#5").hasClass(mark) && $("#7").hasClass(mark) ) {game.win = true;
+  else if ( $("#3").hasClass(mark) && $("#5").hasClass(mark) && $("#7").hasClass(mark) ) {game.win = true; win();
       clearControls();
   controls.append(`<p>${player} ${mark} wins</p>`);
   $("#3, #5, #7").addClass("win")
   } 
   // tied condition
-  else if (  $(".x").length == 5 ){
+  else if (  $(".x").length == 5 && $(".y").length == 4 ){
     game.win = "tie";
     clearControls();
     controls.append(`<p>Tie</p>`);
   }
 }
+
+
+
+
+const timeOver = function(){
+
+  clearTimeout(timer);
+    //time = 5;
+
+    let clicked = $(".clicked");
+  
+    clicked.removeClass("clicked");
+  
+    addListeners();
+  
+    round++;
+  
+    checkWin("x", game.x);
+    checkWin("o", game.o);
+  
+    removeClick("x");
+    removeClick("o");
+  
+    showTurn();
+    controls.prepend("<p>Time's Up</p>");
+  }
