@@ -250,7 +250,7 @@ hr {
   font-family: Rubik;
   font-style: normal;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 65px;
   letter-spacing: 0.02em;
   color: #404040;
@@ -258,7 +258,7 @@ hr {
 }
 
 .trivia {
-  font-size: 20px;
+  font-size: 17px;
   margin: 0 0 15px;
 }
 
@@ -272,6 +272,31 @@ p {
   margin: 0;
 }
 
+label {
+  font-size: 10px;
+}
+
+input[type="submit"] {
+  font-size: 12px;
+  line-height: 12px;
+}
+
+button {
+  width: 50%;
+  font-size: 13px;
+  background: linear-gradient(180deg, #016BB8 10%, #0188eb);
+  color: white;
+  padding: 7px 18px;
+  margin: 10px auto;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  display: inherit;
+}
+
+#timer {
+  font-size: 13px;
+}
 
 }
 
