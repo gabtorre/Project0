@@ -368,7 +368,7 @@ const checkWin = function (mark, player, num1, num2, num3) {
     sound("./sounds/win.wav");
     clearControls();
     controls.append(nameWin);
-    controls.append(`<hr><input type="submit" value="Play Again" id="reload">`)
+    controls.append(`<hr><button><a href="https://gabtorre.github.io/Tic-Tac-Trivia/">Play Again</a></button>`)
     $(num1).addClass("win")
     $(num2).addClass("win")
     $(num3).addClass("win")

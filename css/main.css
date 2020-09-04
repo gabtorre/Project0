@@ -7,6 +7,12 @@ body {
   text-align: center;
   background: linear-gradient( #353A40, #16171B);
 }
+a {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  margin: 0 auto;
+}
 
 p {
     font-size: 50px;
