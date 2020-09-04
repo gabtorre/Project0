@@ -1,5 +1,5 @@
 
-let timeleft = 10;
+let timeleft = 15;
 
 function counter() {
   count = setInterval(timer, 1000);
@@ -7,17 +7,16 @@ function counter() {
 
 function timer() {
 
-  
   if (timeleft <= 0) {
     timeUp();
     clearInterval(count);
-    timeleft = 10;
+    timeleft = 15;
     return;
   }
 
   timeleft = timeleft - 1;
   const timerdiv = $("#timer");
-  console.log(timeleft)
+  //console.log(timeleft)
   timerdiv.html(`Time ${timeleft}`)//
 }
 
@@ -39,7 +38,7 @@ const clearControls = function () {
 // Gets player names from DOM
 $("#submit-names").on("click", function () {
 
-sound("./sounds/click.wav");
+sound("./sounds/start.wav");
 
 const player1 = document.getElementById("player1").value;
 const player2 = document.getElementById("player2").value;
@@ -116,18 +115,29 @@ const showTurn = function () {
 //adds click listeners to buttons
 const addListeners = function () {
   for (let index = 1; index < 10; index++) {
-    $(`#${index}`).on("click", getTrivia);
+    //$(`#${index}`).on("click", getTrivia);
     $(`#${index}`).on("click", handler);
     $(`#${index}`).on("click", counter);
   }
+  $("#1").on("click", getTrivia1);
+  $("#2").on("click", getTrivia2);
+  $("#3").on("click", getTrivia3);
+  $("#4").on("click", getTrivia4);
+  $("#5").on("click", getTrivia5);
+  $("#6").on("click", getTrivia6);
+  $("#7").on("click", getTrivia7);
+  $("#8").on("click", getTrivia8);
+  $("#9").on("click", getTrivia9);
 };
+
+
 
 // Adds class to mark which square triggered the trivia 
 function handler( event ) {
 $( event.target ).addClass("clicked")
 }
 
-//Shuffle function to shuffle annswers https://css-tricks.com/snippets/jquery/shuffle-children/
+//Shuffle function to shuffle answers https://css-tricks.com/snippets/jquery/shuffle-children/
 $.fn.shuffleChildren = function () {
   $.each(this.get(), function (index, el) {
     var $el = $(el);
@@ -142,45 +152,101 @@ $.fn.shuffleChildren = function () {
   });
 };
 
+
+const showTrivia = function (json) {
+  sound("./sounds/click.wav");
+
+  clearControls();
+
+  controls.append(`
+  <p id="timer">Time 15</p>
+  <p class="trivia">${json.results[0].question}</p>
+  <div class="btns">
+  <button id="right" class="right">${json.results[0].correct_answer}</button>
+  <button class="wrong">${json.results[0].incorrect_answers[0]}</button>
+  <button class="wrong">${json.results[0].incorrect_answers[1]}</button>
+  <button class="wrong">${json.results[0].incorrect_answers[2]}</button>
+  </div>
+  `);
+
+  $(".btns").shuffleChildren();
+
+  removeClick("clicked");
+  removeClick("x");
+  removeClick("square");
+
+  rightAnswer();
+  wrongAnswer();
+};
+
 //Gets questions to display
-const getTrivia = function () { 
+const getTrivia1 = function () { 
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=12&difficulty=easy&type=multiple", function(json) {
+  showTrivia(json);
+});
+}
+
+const getTrivia2 = function () { 
   
-  $.getJSON("https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple", function(json) {
-         console.log(json)
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=25&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-         
+const getTrivia3 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=11&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-         sound("./sounds/click.wav");
+const getTrivia4 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=9&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-         clearControls();
-        
+const getTrivia5 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=14&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-         controls.append(`
-         <p id="timer">Time 10</p>
-         <p class="trivia">${json.results[0].question}</p>
-         <div class="btns">
-         <button id="right" class="right">${json.results[0].correct_answer}</button>
-         <button class="wrong">${json.results[0].incorrect_answers[0]}</button>
-         <button class="wrong">${json.results[0].incorrect_answers[1]}</button>
-         <button class="wrong">${json.results[0].incorrect_answers[2]}</button>
-         </div>
-         `)
+const getTrivia6 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=21&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-        $(".btns").shuffleChildren();
+const getTrivia7 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=10&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-         removeClick("clicked");
-         removeClick("x");
-         removeClick("square");
+const getTrivia8 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=26&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
+});
+}
 
-         rightAnswer();
-         wrongAnswer();
+const getTrivia9 = function () { 
+  
+  $.getJSON("https://opentdb.com/api.php?amount=1&category=15&difficulty=easy&type=multiple", function(json) {
+    showTrivia(json);
 });
 }
 
 const rightAnswer = function () {
   $("#right").on("click", function () {
+
     clearInterval(count);
-    timeleft = 10;
+    timeleft = 15;
 
     let clicked = $(".clicked");
     if (round % 2 == 0) {
@@ -224,7 +290,7 @@ const wrongAnswer = function () {
   $(".wrong").on("click", function () {
 
     clearInterval(count);
-    timeleft = 10;
+    timeleft = 15;
 
     let clicked = $(".clicked");
 
@@ -271,10 +337,9 @@ const timeUp = function () {
 
     showTurn();
 
-    controls.prepend("<p>Time's Up</p>");
+    controls.prepend("<p>Time's Up</p> <hr>");
 
 };
-
 
 const winCombos = function (who, name) {
   checkWin(who, name,"#1","#2","#3")
@@ -287,6 +352,12 @@ const winCombos = function (who, name) {
   checkWin(who, name,"#3","#5","#7")
 }
 
+
+$("#reload").on("click", function() {
+  location.reload();
+});
+
+
 //Checks possible winning combos
 const checkWin = function (mark, player, num1, num2, num3) {
 
@@ -297,6 +368,7 @@ const checkWin = function (mark, player, num1, num2, num3) {
     sound("./sounds/win.wav");
     clearControls();
     controls.append(nameWin);
+    controls.append(`<hr><input type="submit" value="Play Again" id="reload">`)
     $(num1).addClass("win")
     $(num2).addClass("win")
     $(num3).addClass("win")
@@ -309,28 +381,3 @@ const checkWin = function (mark, player, num1, num2, num3) {
     controls.append(`<p>Tie</p>`);
   }
 }
-
-const timeOver = function(){
-
-  clearTimeout(timer);
-    //time = 5;
-
-    let clicked = $(".clicked");
-  
-    clicked.removeClass("clicked");
-  
-    addListeners();
-  
-    round++;
-  
-    checkWin("x", game.x);
-    checkWin("o", game.o);
-  
-    removeClick("x");
-    removeClick("o");
-  
-    showTurn();
-    controls.prepend("<p>Time's Up</p>");
-  }
-
-
