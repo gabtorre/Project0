@@ -1,3 +1,27 @@
+
+let timeleft = 10;
+
+function counter() {
+  count = setInterval(timer, 1000);
+}
+
+function timer() {
+
+  
+  if (timeleft <= 0) {
+    timeUp();
+    clearInterval(count);
+    timeleft = 10;
+    return;
+  }
+
+  timeleft = timeleft - 1;
+  const timerdiv = $("#timer");
+  console.log(timeleft)
+  timerdiv.html(`Time ${timeleft}`)//
+}
+
+
 // Coint toss, Assigns mark x or o to player name
 const game = {
   x: "",
@@ -94,6 +118,7 @@ const addListeners = function () {
   for (let index = 1; index < 10; index++) {
     $(`#${index}`).on("click", getTrivia);
     $(`#${index}`).on("click", handler);
+    $(`#${index}`).on("click", counter);
   }
 };
 
@@ -123,12 +148,15 @@ const getTrivia = function () {
   $.getJSON("https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple", function(json) {
          console.log(json)
 
+         
+
          sound("./sounds/click.wav");
 
          clearControls();
-         controls.append(`<p id="timer"></p>`)
+        
 
          controls.append(`
+         <p id="timer">Time 10</p>
          <p class="trivia">${json.results[0].question}</p>
          <div class="btns">
          <button id="right" class="right">${json.results[0].correct_answer}</button>
@@ -149,40 +177,55 @@ const getTrivia = function () {
 });
 }
 
-const rightAnswer = function(){
-$("#right").on("click", function () {
-let clicked = $(".clicked");
-if (round % 2 == 0) {
-  clicked.addClass("x").text("x");
-  clicked.removeClass("clicked");
-} else {
-  $(".clicked").addClass("o").text("o");
-  clicked.removeClass("clicked");
-}
+const rightAnswer = function () {
+  $("#right").on("click", function () {
+    clearInterval(count);
+    timeleft = 10;
 
-sound("./sounds/correct.wav");
+    let clicked = $(".clicked");
+    if (round % 2 == 0) {
+      clicked.addClass("x").text("x");
+      clicked.removeClass("clicked");
+    } else {
+      $(".clicked").addClass("o").text("o");
+      clicked.removeClass("clicked");
+    }
 
-addListeners();
+    sound("./sounds/correct.wav");
 
-round++;
+    addListeners();
 
-winCombos("o", game.o);
-winCombos("x", game.x);
+    round++;
 
-removeClick("x");
-removeClick("o");
+    winCombos("o", game.o);
+    winCombos("x", game.x);
 
-const correctAr = [
-  "You got it!", "Right you are!", "Correct!", "Right!", "That's it!", "Yes!"
-]
+    removeClick("x");
+    removeClick("o");
 
-showTurn();
-controls.prepend(`<p>${correctAr[Math.floor(Math.random() * 6)]}</p>  <hr>`)
-});
-}
+    const correctAr = [
+      "You got it!",
+      "Right you are!",
+      "Correct!",
+      "Right!",
+      "That's it!",
+      "Yes!",
+    ];
+
+    showTurn();
+    controls.prepend(
+      `<p>${correctAr[Math.floor(Math.random() * 6)]}</p>  <hr>`
+    );
+  });
+};
 
 const wrongAnswer = function () {
+  
   $(".wrong").on("click", function () {
+
+    clearInterval(count);
+    timeleft = 10;
+
     let clicked = $(".clicked");
 
     clicked.removeClass("clicked");
@@ -208,7 +251,33 @@ const wrongAnswer = function () {
 };
 
 
+const timeUp = function () {
+  
+    let clicked = $(".clicked");
+
+    clicked.removeClass("clicked");
+
+    sound("./sounds/wrong.wav");
+
+    addListeners();
+
+    round++;
+
+    winCombos("o", game.o);
+    winCombos("x", game.x);
+
+    removeClick("x");
+    removeClick("o");
+
+    showTurn();
+
+    controls.prepend("<p>Time's Up</p>");
+
+};
+
+
 const winCombos = function (who, name) {
+  checkWin(who, name,"#1","#2","#3")
   checkWin(who, name,"#4","#5","#6")
   checkWin(who, name,"#7","#8","#9")
   checkWin(who, name,"#1","#4","#7")
@@ -221,7 +290,7 @@ const winCombos = function (who, name) {
 //Checks possible winning combos
 const checkWin = function (mark, player, num1, num2, num3) {
 
-  const nameWin = `<p>${player} wins</p>`;
+  const nameWin = `<p>${player} wins!</p>`;
 
   if ( $(num1).hasClass(mark) && $(num2).hasClass(mark) && $(num3).hasClass(mark) ) {
     game.win = true;
@@ -263,3 +332,5 @@ const timeOver = function(){
     showTurn();
     controls.prepend("<p>Time's Up</p>");
   }
+
+
