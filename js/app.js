@@ -341,6 +341,7 @@ const timeUp = function () {
 
 };
 
+//Checks possible winning combos
 const winCombos = function (who, name) {
   checkWin(who, name,"#1","#2","#3")
   checkWin(who, name,"#4","#5","#6")
@@ -351,12 +352,6 @@ const winCombos = function (who, name) {
   checkWin(who, name,"#1","#5","#9")
   checkWin(who, name,"#3","#5","#7")
 }
-
-
-$("#reload").on("click", function() {
-  location.reload();
-});
-
 
 //Checks possible winning combos
 const checkWin = function (mark, player, num1, num2, num3) {
@@ -369,9 +364,7 @@ const checkWin = function (mark, player, num1, num2, num3) {
     clearControls();
     controls.append(nameWin);
     controls.append(`<hr><button><a href="https://gabtorre.github.io/Tic-Tac-Trivia/">Play Again</a></button>`)
-    $(num1).addClass("win")
-    $(num2).addClass("win")
-    $(num3).addClass("win")
+    $(num1).addClass("win"); $(num2).addClass("win"); $(num3).addClass("win");
   }
 
   // tied condition
