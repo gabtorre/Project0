@@ -1,4 +1,4 @@
-From Hollywood it's .. it's .
+From Hollywood it's ..
 
 
 # Tic-Tac-Trivia <h1>
