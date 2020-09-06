@@ -1,5 +1,10 @@
-
-let timeleft = 15;
+// Coint toss, Assigns mark x or o to player name
+const game = {
+  x: "",
+  o: "",
+  win: null,
+  timeleft: 16,
+}
 
 function counter() {
   count = setInterval(timer, 1000);
@@ -7,26 +12,21 @@ function counter() {
 
 function timer() {
 
-  if (timeleft <= 0) {
+  if (game.timeleft <= 0) {
     timeUp();
     clearInterval(count);
-    timeleft = 15;
+    game.timeleft = 16;
     return;
   }
 
-  timeleft = timeleft - 1;
+  game.timeleft = game.timeleft - 1;
   const timerdiv = $("#timer");
   //console.log(timeleft)
-  timerdiv.html(`Time ${timeleft}`)//
+  timerdiv.html(`Time ${game.timeleft}`)//
 }
 
 
-// Coint toss, Assigns mark x or o to player name
-const game = {
-  x: "",
-  o: "",
-  win: null,
-}
+
 //Keeps track of rounds and whos turn it is
 let round = 0;
 //Game controls section
@@ -52,6 +52,10 @@ if (randNum) {
   game.x = player2;
   game.o = player1;
 }
+
+$(".nav p:eq(0)").append(game.x)
+$(".nav p:eq(1)").append(game.o)
+
 showFirst();
 addListeners();
 });
@@ -68,6 +72,7 @@ const showFirst = function () {
   //shows who goes first
   clearControls();
   if (round == 0) {
+    $("#timer").empty()
     controls.append(`
     <p class="x">X</p>
     <p>${game.x} goes first</p>
@@ -97,16 +102,19 @@ const removeClick = function (mark) {
 const showTurn = function () {
   if (round % 2 == 0 && game.win == null) {
     clearControls();
+    $(".nav p:nth-of-type(1)").addClass("green-border")
+    $(".nav p:nth-of-type(2)").removeClass("purple-border")
     controls.append(`
-      <p>${game.x}'s turn</p>
-      <p class="x">X</p>
+      <p><span class="x">X</span> ${game.x}'s turn</p>
       <p class="small">Select a Category</p>
       `);
   } else if (round % 2 !== 0 && game.win == null) {
     clearControls();
+
+    $(".nav p:nth-of-type(1)").removeClass("green-border")
+    $(".nav p:nth-of-type(2)").addClass("purple-border")
     controls.append(`
-      <p>${game.o}'s turn</p>
-      <p class="o">O</p>
+    <p><span class="o">O</span> ${game.o}'s turn</p>
       <p class="small">Select a Category</p>
       `);
   }
@@ -114,23 +122,12 @@ const showTurn = function () {
 
 //adds click listeners to buttons
 const addListeners = function () {
-  for (let index = 1; index < 10; index++) {
-    //$(`#${index}`).on("click", getTrivia);
-    $(`#${index}`).on("click", handler);
-    $(`#${index}`).on("click", counter);
-  }
-  $("#1").on("click", getTrivia1);
-  $("#2").on("click", getTrivia2);
-  $("#3").on("click", getTrivia3);
-  $("#4").on("click", getTrivia4);
-  $("#5").on("click", getTrivia5);
-  $("#6").on("click", getTrivia6);
-  $("#7").on("click", getTrivia7);
-  $("#8").on("click", getTrivia8);
-  $("#9").on("click", getTrivia9);
+  $(".listen").each(function (index) {
+    $(this).on("click", eval("getTrivia" + (index + 1)));
+    $(this).on("click", handler);
+    $(this).on("click", counter);
+  });
 };
-
-
 
 // Adds class to mark which square triggered the trivia 
 function handler( event ) {
@@ -159,7 +156,7 @@ const showTrivia = function (json) {
   clearControls();
 
   controls.append(`
-  <p id="timer">Time 15</p>
+
   <p class="trivia">${json.results[0].question}</p>
   <div class="btns">
   <button id="right" class="right">${json.results[0].correct_answer}</button>
@@ -246,7 +243,7 @@ const rightAnswer = function () {
   $("#right").on("click", function () {
 
     clearInterval(count);
-    timeleft = 15;
+    game.timeleft = 16;
 
     let clicked = $(".clicked");
     if (round % 2 == 0) {
@@ -290,7 +287,7 @@ const wrongAnswer = function () {
   $(".wrong").on("click", function () {
 
     clearInterval(count);
-    timeleft = 15;
+    game.timeleft = 16;
 
     let clicked = $(".clicked");
 
@@ -313,6 +310,7 @@ const wrongAnswer = function () {
     const wrongAr = ["No", "Oh no!", "Wrong!", "Nope!"];
 
     controls.prepend(`<p>${wrongAr[Math.floor(Math.random() * 4)]}</p> <hr>`);
+
   });
 };
 
@@ -363,7 +361,8 @@ const checkWin = function (mark, player, num1, num2, num3) {
     sound("./sounds/win.wav");
     clearControls();
     controls.append(nameWin);
-    controls.append(`<hr><button><a href="https://gabtorre.github.io/Tic-Tac-Trivia/">Play Again</a></button>`)
+    controls.append(`<hr>
+    <button><a href="https://gabtorre.github.io/Tic-Tac-Trivia/">Play Again</a></button>`)
     $(num1).addClass("win"); $(num2).addClass("win"); $(num3).addClass("win");
   }
 

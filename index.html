@@ -7,13 +7,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <link rel="stylesheet" href="./css/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <section class="container">
+<section class="container">
     
+    <div id="left"> 
+
+    <div class="nav">
+        <p><span class="lato">X </span></p>
+        <p><span class="lato">O</span> </p>
+        <p id="timer">Tic-Tac-Trivia</p>
+    
+    </div>
+
+    
+
     <div id="game-controls">
-        <img class="logo" src="img/logo.png">
+        <!-- <img class="logo" src="img/logo.png"> -->
         <label for="player1">Player 1 Name:</label>
         <input type="text" id="player1" name="player1">
         <label for="player2">Player 2 Name:</label>
@@ -21,16 +33,18 @@
         <input type="submit" value="Play" id="submit-names"> 
     </div>
 
+    </div>
+
     <div id="game-board">
-    <div id="1" class="square">Music</div>
-    <div id="2" class="square">Art</div>
-    <div id="3" class="square">Film</div>
-    <div id="4" class="square">General</div>
-    <div id="5" class="square">TV</div>
-    <div id="6" class="square">Sports</div>
-    <div id="7" class="square">Books</div>
-    <div id="8" class="square">Celebs</div>
-    <div id="9" class="square">Gaming</div>
+    <div id="1" class="square listen">Music</div>
+    <div id="2" class="square listen">Art</div>
+    <div id="3" class="square listen">Film</div>
+    <div id="4" class="square listen">General</div>
+    <div id="5" class="square listen">TV</div>
+    <div id="6" class="square listen">Sports</div>
+    <div id="7" class="square listen">Books</div>
+    <div id="8" class="square listen">Celebs</div>
+    <div id="9" class="square listen">Gaming</div>
     </div>
 
 </section>
