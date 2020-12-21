@@ -175,7 +175,6 @@ const showTrivia = function (json) {
   clearControls();
 
   controls.append(`
-
   <p class="trivia">${json.results[0].question}</p>
   <div class="btns">
   <button id="right" class="right">${json.results[0].correct_answer}</button>
@@ -436,15 +435,15 @@ const checkWin = function (mark, player, num1, num2, num3) {
 
 
 
+// Tied condition
 const checkTie = function (){
-  // tied condition
-  if ( game.win === null ){
-    if ( $("#game-board .x").length > 4 || $("#game-board .o").length > 4 ) {
-      game.win = "tie";
-      clearControls();
-      setTimeout(function () {
-        controls.append(`<hr><p>Tie</p><hr><button><a href="https://gabtorre.github.io/Tic-Tac-Trivia/">Play Again</a></button>`);
-      }, 800);
-    }
+  const x = $("#game-board .x");
+  const o = $("#game-board .o");
+  if ( ( x.length >= 5 || o.length >= 5) && game.win === null ) {
+    game.win = "tie";
+    clearControls();
+    setTimeout(function () {
+      controls.append(`<hr><p>Tie</p><hr><button><a href="https://gabtorre.github.io/Tic-Tac-Trivia/">Play Again</a></button>`);
+    }, 800);
   }
 }
